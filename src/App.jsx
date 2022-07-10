@@ -1,11 +1,16 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import Nav from "./controllers/Nav";
 
 const App=()=>{
   return(
     <>
-    <h1>welcome to colorhunt2 application</h1>
+    <BrowserRouter>
+    <Nav/>
+    </BrowserRouter>
     </>
-  )
+   
+    )
 }
 
 export default App;

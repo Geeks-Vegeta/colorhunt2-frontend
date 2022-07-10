@@ -1,0 +1,44 @@
+
+.list-urls>ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+}
+
+
+.grey-color{
+    color: gray;
+}
+
+.grey-color:hover{
+    color: black;
+}
+
+.pattern-i{
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.pattern-i::-webkit-scrollbar {
+    display: none;
+}
+
+.list-urls>ul>li{
+    font-size: 1.2rem;
+    color: gray;
+    cursor: pointer;
+}
+
+.list-collection>ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+}
+
+.list-collection>ul>li{
+    font-size: 0.9rem;
+    color: gray;
+    cursor: pointer;
+}
