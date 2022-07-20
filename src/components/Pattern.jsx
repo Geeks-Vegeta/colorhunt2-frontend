@@ -14,7 +14,7 @@ import { FaMixcloud } from "react-icons/fa";
 import { TbArrowsRandom } from "react-icons/tb";
 import "./pattern.css"
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import hexRgb from 'hex-rgb';
 import moment from "moment"; //importing moment for date
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -83,7 +83,7 @@ export default function Pattern(props) {
     toJpeg(document.getElementById('color-picker-card'))
   .then(function (dataUrl) {
     var link = document.createElement('a');
-    link.download = window.location.href;
+    link.download = `${window.location.href}.jpg`;
     link.href = dataUrl;
     link.click();
   });
@@ -144,15 +144,15 @@ export default function Pattern(props) {
             <div className="list-urls">
                 <ul>
                     <li className='my-3'><AiOutlineStar size={"1.5rem"} className="mx-2"/>
-                    <Link className='grey-color' to="/">New</Link></li>
+                    <NavLink className={({ isActive }) => (isActive ? 'text-dark' : 'grey-color')} to="/">New</NavLink></li>
                     <li className='my-3'><FaMixcloud size={"1.5rem"} className="mx-2"/>
-                    <Link className='grey-color' to="/popular">Popular</Link></li>
+                    <NavLink className={({ isActive }) => (isActive ? 'text-dark' : 'grey-color')} to="/popular">Popular</NavLink></li>
                     <li className='my-3'><TbArrowsRandom size={"1.5rem"} className="mx-2"/>
-                    <Link className='grey-color' to="/random">Random</Link></li>
+                    <NavLink className={({ isActive }) => (isActive ? 'text-dark' : 'grey-color')} to="/random">Random</NavLink></li>
                     <li className='my-3'><AiOutlineHeart size={"1.5rem"} className="mx-2"/>
-                    <Link className='grey-color' to="/collection">Collection</Link></li>
+                    <NavLink className={({ isActive }) => (isActive ? 'text-dark' : 'grey-color')} to="/collection">Collection</NavLink></li>
                     <li className='my-3'><AiFillFileAdd size={"1.5rem"} className="mx-2"/>
-                    <Link className='grey-color' to="/create">Create</Link></li>
+                    <NavLink className={({ isActive }) => (isActive ? 'text-dark' : 'grey-color')} to="/create">Create</NavLink></li>
                 </ul>
             </div>
             <div className="list-collection my-2">
@@ -161,7 +161,7 @@ export default function Pattern(props) {
                   return(
                     <>
                       <li className='mx-3 my-3'>
-                        <Link className='grey-color' to={`/palettes/${data.tag}`}>{data.tag}</Link></li>
+                        <NavLink className={({ isActive }) => (isActive ? 'text-dark' : 'grey-color')} to={`/palettes/${data.tag}`}>{data.tag}</NavLink></li>
                     </>
                   )
                 })}
@@ -360,10 +360,11 @@ export default function Pattern(props) {
           
         </MDBCol>
         <MDBCol lg="2">
-            <h5>Most Popular Palettes of Color Hunt</h5>
+            <h5>Most Popular Palettes of Color Picker</h5>
             <p>The community's favorite color palettes</p>
             <hr className='w-75 mx-auto' />
-            <p className='text-center text-muted'>About</p>
+            <p className='text-center text-muted'>
+              <Link className='text-center text-muted' to="/about">About</Link></p>
             <p className='text-center text-muted size'>Made with <AiFillHeart className='pink'/> By Shreyas Mohite</p>
         </MDBCol>
       </MDBRow>
