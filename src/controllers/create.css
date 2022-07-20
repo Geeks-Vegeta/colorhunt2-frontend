@@ -1,0 +1,107 @@
+.react-colorful {
+    height: 240px;
+  }
+.react-colorful__saturation {
+    border-radius: 4px 4px 0 0;
+  }
+.react-colorful__hue {
+    height: 40px;
+    border-radius: 0 0 4px 4px;
+  }
+.react-colorful__hue-pointer {
+    width: 12px;
+    height: inherit;
+    border-radius: 0;
+  }
+
+.color-picker-card{
+  width: 400px;
+  border-radius: 0.8rem;
+  background-color: rgb(136, 138, 138);
+  height: 400px;
+}
+
+.pallet-1{
+  cursor: pointer;
+  width: 400px;
+  height: 150px;
+  border-top-left-radius: 0.8rem;
+  border-top-right-radius: 0.8rem;
+}
+
+.pallet-2{
+  cursor: pointer;
+  width: 400px;
+  height: 110px;
+}
+
+.pallet-3{
+  cursor: pointer;
+  width: 400px;
+  height: 80px;
+}
+
+
+.pallet-4{
+  cursor: pointer;
+  width: 400px;
+  height: 60px;
+  border-bottom-left-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem;
+}
+
+.submit-palettes{
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  border-color: teal;
+  border-width: 0.1rem;
+  outline: none;
+}
+
+.tagInputFieldClass{
+  padding: 0.6rem;
+  outline: none;
+  border:none;
+  border-bottom: 1px solid green;
+  width: 20rem;
+}
+
+.text-grey{
+  color: grey;
+}
+
+.tags{
+  width: 20rem;
+}
+
+
+.tagClass{
+  margin: 0.4rem;
+ color: grey;
+}
+
+.removeClass{
+  border: none;
+  margin: 0.1rem;
+  width: 25px;
+  text-align: center;
+  background-color: rgb(0, 0, 0);
+  color: aqua;
+  border-radius: 50%;
+}
+
+.tagInputClass{
+  margin-top: 1rem;
+}
+
+.cursor{
+  cursor: pointer;
+  color: gray;
+}
+
+.color-picker{
+  position: absolute;
+  top: 30%;
+  left: 20%;
+}

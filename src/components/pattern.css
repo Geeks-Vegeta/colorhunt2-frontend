@@ -42,3 +42,101 @@
     color: gray;
     cursor: pointer;
 }
+
+.colors-show>ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.colors-show>ul>li{
+    margin-left: 1rem;
+    padding: 1rem;
+}
+
+.color-circle-box{
+    width: 10rem;
+    height: 10rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    margin: 1rem;
+}
+
+.down-like-link>ul{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.li{
+    margin: 1rem;
+    width: 6rem;
+    height: 2rem;
+    padding: 0.1rem;
+    background-color: transparent;
+    border: 1px solid rgb(35, 37, 37);
+    border-radius: 14px;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+#color-picker-card{
+  width: 400px;
+  border-radius: 0.8rem;
+  background-color: rgb(136, 138, 138);
+  height: 400px;
+ 
+}
+
+.medium-palette{
+  width: 270px;
+  border-radius: 0.8rem;
+  background-color: rgb(136, 138, 138);
+  height: 260px;
+
+}
+
+
+.medium-pallet-1{
+    cursor: pointer;
+    width: 270px;
+    height: 100px;
+    background-color: aqua;
+    border-top-left-radius: 0.8rem;
+    border-top-right-radius: 0.8rem;
+  }
+  
+  .medium-pallet-2{
+    cursor: pointer;
+    background-color: aquamarine;
+    width: 270px;
+    height: 70px;
+  }
+  
+  .medium-pallet-3{
+    cursor: pointer;
+    background-color: black;
+    width: 270px;
+    height: 50px;
+  }
+  
+  
+  .medium-pallet-4{
+    cursor: pointer;
+    width: 270px;
+    background-color: blue;
+    height: 40px;
+    border-bottom-left-radius: 0.8rem;
+    border-bottom-right-radius: 0.8rem;
+  }
+  
+
+.size{
+    font-size: 0.8rem;
+}
+
+.pink{
+    color: pink;
+}

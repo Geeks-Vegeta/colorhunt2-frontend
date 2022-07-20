@@ -1,17 +1,54 @@
 import React, {useState, useEffect} from 'react';
-import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import { AiOutlineStar, AiOutlineHeart } from "react-icons/ai";
+import { 
+  MDBContainer, 
+  MDBRow, 
+  MDBCol, 
+  MDBTable, 
+  MDBTableHead, 
+  MDBTableBody,
+  } from 'mdb-react-ui-kit';
+import { GetColorName } from 'hex-color-to-color-name';
+import { AiOutlineStar, AiOutlineHeart, AiFillFileAdd, AiFillHeart } from "react-icons/ai";
+import { BsLink45Deg, BsDownload } from "react-icons/bs";
 import { FaMixcloud } from "react-icons/fa";
 import { TbArrowsRandom } from "react-icons/tb";
 import "./pattern.css"
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import hexRgb from 'hex-rgb';
+import moment from "moment"; //importing moment for date
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toJpeg } from 'html-to-image';
 
-export default function Pattern() {
 
+
+export default function Pattern(props) {
   const [collection, setCollection] = useState([]);
+  const [likes, setLikes] = useState();
+
+
+   //getting data from  localstorage
+   const getItem=()=>{
+    //local storage name
+    const allist=localStorage.getItem("color-picker-favorite");
+    //if exists
+    if(allist){
+    //return again data to local storage
+    return JSON.parse(localStorage.getItem('color-picker-favorite'));
+    }else{
+    //else reaturn empty data
+    return [];
+    }
+  }
+
+
+  const [favo,setfavo]=useState(getItem()); //state for favo likes colors
+
 
   useEffect(()=>{
+    setLikes(props.likes)
 
     const getAllCollections=async()=>{
 
@@ -19,7 +56,6 @@ export default function Pattern() {
 
         const coll = await axios.get("https://colorhunt2-api.herokuapp.com/tag/getcollectiontag");
         setCollection(coll.data);
-        console.log(coll.data);
         
       } catch (error) {
         console.log(error);
@@ -28,11 +64,81 @@ export default function Pattern() {
 
     }
     getAllCollections();
-  },[])
+
+  },[props.likes]);
+
+  const showToast=()=>{
+    toast.dark('copied', {
+      position: "top-center",
+      autoClose: 300,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  }
+
+  const DownloadImage=()=>{
+    toJpeg(document.getElementById('color-picker-card'))
+  .then(function (dataUrl) {
+    var link = document.createElement('a');
+    link.download = window.location.href;
+    link.href = dataUrl;
+    link.click();
+  });
+  }
+
+  //storing data of individual color
+  const saveToLocalStorage=(items)=>{
+    //creating a storing of name
+    localStorage.setItem('color-picker-favorite',JSON.stringify(items)); 
+  }
+
+  const likeColor=async()=>{
+
+    try {
+      await axios.put(`https://colorhunt2-api.herokuapp.com/color/like/${props.id}`);
+      const getColor = await axios.get(`https://colorhunt2-api.herokuapp.com/color/getcolor/${props.id}`);
+      const adds=[...favo,getColor.data] //taking previous data of favo and adding new data of color
+      setfavo(adds); //adding it to favos
+      saveToLocalStorage(adds); //saving add in local storage
+      setLikes(likes+1);
+
+
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+    
+
+  const unlikeColor=async()=>{
+
+    try {
+      await axios.put(`https://colorhunt2-api.herokuapp.com/color/unlike/${props.id}`);
+      let items=JSON.parse(localStorage.getItem("color-picker-favorite"));
+
+      items = items.filter((data, id)=>
+        data._id!==props.id
+      )
+      setfavo(data=>data.filter((val, id)=>{
+        return val._id!==props.id;
+      }))
+      saveToLocalStorage(items); //saving add in local storage
+      setLikes(likes-1);
+
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   return (
-    <MDBContainer fluid>
+    <MDBContainer fluid className='my-4'>
       <MDBRow>
         <MDBCol lg="2" className='pattern-i'>
             <div className="list-urls">
@@ -45,6 +151,8 @@ export default function Pattern() {
                     <Link className='grey-color' to="/random">Random</Link></li>
                     <li className='my-3'><AiOutlineHeart size={"1.5rem"} className="mx-2"/>
                     <Link className='grey-color' to="/collection">Collection</Link></li>
+                    <li className='my-3'><AiFillFileAdd size={"1.5rem"} className="mx-2"/>
+                    <Link className='grey-color' to="/create">Create</Link></li>
                 </ul>
             </div>
             <div className="list-collection my-2">
@@ -60,15 +168,206 @@ export default function Pattern() {
               </ul>
             </div>
         </MDBCol>
+
         <MDBCol lg="8">
-          One of three columns
+          {props.getcolor?(
+            <>
+            <div className="w-50 mx-auto">
+              <div id="color-picker-card">
+                  <div className="pallet-1" style={{backgroundColor:props.color1}}></div>
+                  <div className="pallet-2" style={{backgroundColor:props.color2}}></div>
+                  <div className="pallet-3" style={{backgroundColor:props.color3}}></div>
+                  <div className="pallet-4" style={{backgroundColor:props.color4}}></div>
+                </div>
+            </div>
+
+             
+              <div className="down-like-link w-75 mx-auto">
+                <ul>
+                  {favo?(
+                    <>
+                    {favo.some(item => item._id === props.id)?(
+                    <>
+                      <li onClick={unlikeColor} className='cursor li'><AiFillHeart size={25} className='mx-2 text-black'/> {likes?likes:0}</li>
+
+                    </>
+                  ):(
+                    <>
+                      <li onClick={likeColor} className='cursor li'><AiOutlineHeart size={25} className='mx-2'/> {likes?likes:0}</li>
+                    </>
+                  )}
+                    </>
+                  ):(
+                    <>
+                      <li onClick={likeColor} className='cursor li'><AiOutlineHeart size={25} className='mx-2'/> {likes?likes:0}</li>
+                    </>
+                  )}
+                  
+                  <li onClick={DownloadImage} className='cursor li'><BsDownload size={25} className='mx-2'/>Image</li>
+                    <CopyToClipboard text={window.location.href}>
+                      <li onClick={showToast} className='cursor li'><BsLink45Deg size={25} className='mx-2'/>
+                        <span>Link</span>
+                      </li>
+                    </CopyToClipboard>
+
+                  {props.date?(
+                    <>
+                      <li className='my-3 text-muted'>{moment(props.date).fromNow(true)}</li>
+                    </>
+                  ):(
+                    <>
+                    </>
+                  )}
+                </ul>
+
+              </div>
+
+
+              <MDBTable className='my-5 mx-auto w-75'>
+                <MDBTableHead>
+                  <tr>
+                    <th scope='col'>
+                      <span className='color-circle-box cursor' style={{backgroundColor:props.color1, color:props.color1}}>ok</span>
+                    </th>
+                    <th scope='col'>
+                    <span className='color-circle-box cursor' style={{backgroundColor:props.color2, color:props.color2}}>ok</span>
+                    </th>
+                    <th scope='col'>
+                    <span className='color-circle-box cursor' style={{backgroundColor:props.color3, color:props.color3}}>ok</span>
+                    </th>
+                    <th scope='col'>
+                    <span className='color-circle-box cursor' style={{backgroundColor:props.color4, color:props.color4}}>ok</span>
+                    </th>
+                  </tr>
+                </MDBTableHead>
+
+                <MDBTableBody>
+                  <tr>
+                  {props.color1 && props.color2 && props.color3 && props.color4?(
+                      <>
+                        <CopyToClipboard text={props.color1}>
+                          <td onClick={showToast} className='cursor'>{props.color1}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={props.color2}>
+                          <td onClick={showToast} className='cursor'>{props.color2}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={props.color3}>
+                          <td onClick={showToast} className='cursor'>{props.color3}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={props.color4}>
+                          <td onClick={showToast} className='cursor'>{props.color4}</td>
+                        </CopyToClipboard>
+                      </>
+                    ):(
+                      <>
+                      </>
+                    )}
+                  </tr>
+
+                  <tr>
+                    {props.color1 && props.color2 && props.color3 && props.color4?(
+                      <>
+                        <CopyToClipboard text={hexRgb(props.color1, {format: 'css'})}>
+                          <td onClick={showToast} className='cursor'>{hexRgb(props.color1, {format: 'css'})}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={hexRgb(props.color2, {format: 'css'})}>
+                          <td onClick={showToast} className='cursor'>{hexRgb(props.color2, {format: 'css'})}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={hexRgb(props.color3, {format: 'css'})}>
+                          <td onClick={showToast} className='cursor'>{hexRgb(props.color3, {format: 'css'})}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={hexRgb(props.color4, {format: 'css'})}>
+                          <td onClick={showToast} className='cursor'>{hexRgb(props.color4, {format: 'css'})}</td>
+                        </CopyToClipboard>
+                      </>
+                    ):(
+                      <>
+                      </>
+                    )}
+                  </tr>
+
+                  <tr>
+                    {props.color1 && props.color2 && props.color3 && props.color4?(
+                      <>
+                       <CopyToClipboard text={GetColorName(props.color1)}>
+                       <td onClick={showToast} className='cursor'>{GetColorName(props.color1)}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={GetColorName(props.color2)}>
+                       <td onClick={showToast} className='cursor'>{GetColorName(props.color2)}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={GetColorName(props.color3)}>
+                       <td onClick={showToast} className='cursor'>{GetColorName(props.color3)}</td>
+                        </CopyToClipboard>
+                        <CopyToClipboard text={GetColorName(props.color4)}>
+                       <td onClick={showToast} className='cursor'>{GetColorName(props.color4)}</td>
+                        </CopyToClipboard>
+                      </>
+                    ):(
+                      <>
+                      </>
+                    )}
+                  </tr>
+                  {/* hexRgb('#cd2222cc', {format: 'css'}); */}
+                </MDBTableBody>
+              </MDBTable>
+
+              {/* tags */}
+              {props.tags?(
+                <>
+                </>
+              ):(
+                <>
+                </>
+              )}
+
+            </>
+          ):(
+            <>
+            </>
+          )}
+
+          {props.isCollection?(
+            <>
+            <h5>My Collections</h5>
+            
+            <MDBRow>
+                {favo.map((data,idx)=>{
+                return(
+                  <>
+                    <MDBCol size="4" className='my-2'>
+                      <Link to={`/color/${data._id}`}>
+                        <div className="medium-palette">
+                          <div className="medium-pallet-1" style={{backgroundColor:data.color1}}></div>
+                          <div className="medium-pallet-2" style={{backgroundColor:data.color2}}></div>
+                          <div className="medium-pallet-3" style={{backgroundColor:data.color3}}></div>
+                          <div className="medium-pallet-4" style={{backgroundColor:data.color4}}></div>
+                        </div>
+                      </Link>
+                    </MDBCol>
+                  </>
+                )
+              })}
+            </MDBRow>
+
+           
+
+            </>
+          ):(
+            <>
+            </>
+          )}
+
+          
         </MDBCol>
         <MDBCol lg="2">
             <h5>Most Popular Palettes of Color Hunt</h5>
             <p>The community's favorite color palettes</p>
-
+            <hr className='w-75 mx-auto' />
+            <p className='text-center text-muted'>About</p>
+            <p className='text-center text-muted size'>Made with <AiFillHeart className='pink'/> By Shreyas Mohite</p>
         </MDBCol>
       </MDBRow>
+      <ToastContainer/>
     </MDBContainer>
   );
-}
+} 
