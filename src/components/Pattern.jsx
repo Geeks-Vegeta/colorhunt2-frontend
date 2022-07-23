@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import { 
   MDBContainer, 
   MDBRow, 
@@ -21,12 +21,19 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toJpeg } from 'html-to-image';
+import ReactPaginate from 'react-paginate';
 
 
 
 export default function Pattern(props) {
   const [collection, setCollection] = useState([]);
+  const [Colors, setLatestColors] = useState([]);
   const [likes, setLikes] = useState();
+  const [offset, setOffSet] = useState(0);
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+
 
 
    //getting data from  localstorage
@@ -53,7 +60,11 @@ export default function Pattern(props) {
     const getAllCollections=async()=>{
 
       try {
-
+        if(props.url){
+         
+          const colors = await axios.get(`${props.url}/100/${offset}`);
+          setLatestColors(colors.data[0].results);
+        }
         const coll = await axios.get("https://colorhunt2-api.herokuapp.com/tag/getcollectiontag");
         setCollection(coll.data);
         
@@ -65,7 +76,7 @@ export default function Pattern(props) {
     }
     getAllCollections();
 
-  },[props.likes]);
+  },[props.likes, props.url, offset]);
 
   const showToast=()=>{
     toast.dark('copied', {
@@ -113,8 +124,30 @@ export default function Pattern(props) {
   }
 
 
-    
+  useEffect(()=>{
 
+    const newColors=async()=>{
+      try {
+        const endOffset = itemOffset + 6;
+        setCurrentItems(Colors.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(Colors.length / 6));
+      } 
+      catch (error) {
+      } 
+    }
+    newColors();
+
+  },[offset, itemOffset, Colors, props.url])
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * 6) % Colors.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
+
+ 
   const unlikeColor=async()=>{
 
     try {
@@ -169,7 +202,7 @@ export default function Pattern(props) {
             </div>
         </MDBCol>
 
-        <MDBCol lg="8">
+        <MDBCol className='pattern-ii' lg="8">
           {props.getcolor?(
             <>
             <div className="w-50 mx-auto">
@@ -319,6 +352,66 @@ export default function Pattern(props) {
                 <>
                 </>
               )}
+
+            </>
+          ):(
+            <>
+            </>
+          )}
+
+          {props.isColorSet?(
+            <>
+             
+             <MDBRow>
+              {currentItems?(
+                <>
+                {currentItems.map((data,idx)=>{
+                return(
+                  <>
+                    <MDBCol size="4" className='my-2'>
+                      <Link to={`/color/${data._id}`}>
+                        <div className="medium-palette" key={idx}>
+                          <div className="medium-pallet-1" style={{backgroundColor:data.color1}}></div>
+                          <div className="medium-pallet-2" style={{backgroundColor:data.color2}}></div>
+                          <div className="medium-pallet-3" style={{backgroundColor:data.color3}}></div>
+                          <div className="medium-pallet-4" style={{backgroundColor:data.color4}}></div>
+                        </div>
+                      </Link>
+                    </MDBCol>
+                  </>
+                )
+              })}
+                </>
+              ):(
+                <>
+                <h3>Loading ...</h3>
+                </>
+              )}
+                
+            </MDBRow>
+            <div className="text-center mt-3 w-50 mx-auto">
+              <ReactPaginate
+                nextLabel=">"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={2}
+                pageCount={pageCount}
+                previousLabel="<"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+                renderOnZeroPageCount={null}
+              />
+            </div>
+            
 
             </>
           ):(

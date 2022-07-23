@@ -4,7 +4,9 @@ import Pattern from "../components/Pattern";
 const Random=()=>{
     return(
         <>
-        <Pattern/>
+        <Pattern
+        isColorSet={true}
+        url={"https://colorhunt2-api.herokuapp.com/color/getallrecentcolors"}/>
         </>
     )
 }

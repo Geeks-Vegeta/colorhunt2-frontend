@@ -4,7 +4,9 @@ import Pattern from "../components/Pattern";
 const Popular=()=>{
     return(
         <>
-        <Pattern/>
+       <Pattern
+        isColorSet={true}
+        url={"https://colorhunt2-api.herokuapp.com/color/getallrecentcolors"}/>
         </>
     )
 }

@@ -24,6 +24,15 @@
     display: none;
 }
 
+.pattern-ii{
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.pattern-ii::-webkit-scrollbar {
+    display: none;
+}
+
 .list-urls>ul>li{
     font-size: 1.2rem;
     color: gray;
