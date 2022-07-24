@@ -149,3 +149,23 @@
 .pink{
     color: pink;
 }
+
+
+.collection-tags-button>ul{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-evenly;
+}
+
+.collection-tags-button>ul>li{
+    width: 5rem;
+    height: 2rem;
+    text-align: center;
+    padding: 0.1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    outline: auto;
+    border-color: rgb(165, 57, 57);
+    border-width: 1rem;
+    background-color: transparent;
+}

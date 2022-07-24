@@ -347,6 +347,23 @@ export default function Pattern(props) {
               {/* tags */}
               {props.tags?(
                 <>
+                <p className='text-center'>Tags</p>
+                 <div className="collection-tags-button w-50 mx-auto">
+                    <ul>
+                {props.tags.map((data, idx)=>{
+                  return(
+                    <>
+                   
+                      <li>
+                        <Link className='text-dark' to={`/palettes/${data.value}`}> {data.value}</Link>
+                        </li>
+                     
+                    </>
+                  )
+                })}
+                </ul>
+                </div>
+
                 </>
               ):(
                 <>
