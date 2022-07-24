@@ -367,6 +367,7 @@ export default function Pattern(props) {
                 </>
               ):(
                 <>
+                <p className='text-center text-muted'>No Tags</p>
                 </>
               )}
 
