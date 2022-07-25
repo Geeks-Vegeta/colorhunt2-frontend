@@ -207,10 +207,30 @@ export default function Pattern(props) {
             <>
             <div className="w-50 mx-auto">
               <div id="color-picker-card">
-                  <div className="pallet-1" style={{backgroundColor:props.color1}}></div>
-                  <div className="pallet-2" style={{backgroundColor:props.color2}}></div>
-                  <div className="pallet-3" style={{backgroundColor:props.color3}}></div>
-                  <div className="pallet-4" style={{backgroundColor:props.color4}}></div>
+                  <div className="pallet-1" 
+                  onMouseOver={()=>document.getElementById('show-pallet-1-color-on-hover').style.display='block'} 
+                  onMouseOut={()=>document.getElementById('show-pallet-1-color-on-hover').style.display='none'}
+                  style={{backgroundColor:props.color1}}>
+                    <span id="show-pallet-1-color-on-hover">{props.color1}</span>
+                  </div>
+                  <div className="pallet-2" 
+                  onMouseOver={()=>document.getElementById('show-pallet-2-color-on-hover').style.display='block'} 
+                  onMouseOut={()=>document.getElementById('show-pallet-2-color-on-hover').style.display='none'}
+                  style={{backgroundColor:props.color2}}>
+                  <span id="show-pallet-2-color-on-hover">{props.color2}</span>
+                  </div>
+                  <div className="pallet-3" 
+                  onMouseOver={()=>document.getElementById('show-pallet-3-color-on-hover').style.display='block'} 
+                  onMouseOut={()=>document.getElementById('show-pallet-3-color-on-hover').style.display='none'}
+                  style={{backgroundColor:props.color3}}>
+                  <span id="show-pallet-3-color-on-hover">{props.color3}</span>
+                  </div>
+                  <div className="pallet-4" 
+                  onMouseOver={()=>document.getElementById('show-pallet-4-color-on-hover').style.display='block'} 
+                  onMouseOut={()=>document.getElementById('show-pallet-4-color-on-hover').style.display='none'}
+                  style={{backgroundColor:props.color4}}>
+                  <span id="show-pallet-4-color-on-hover">{props.color4}</span>
+                  </div>
                 </div>
             </div>
 

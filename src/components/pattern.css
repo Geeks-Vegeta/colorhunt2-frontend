@@ -67,6 +67,8 @@
     width: 10rem;
     height: 10rem;
     padding: 0.5rem;
+    border: 0.1px solid rgb(35, 37, 37);
+    border-width: 0.01rem;
     border-radius: 50%;
     margin: 1rem;
 }
@@ -107,6 +109,46 @@
 
 }
 
+#show-pallet-1-color-on-hover{
+    position: relative;
+    top: 115px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    padding: 0.3rem;
+    display: none;
+}
+
+#show-pallet-2-color-on-hover{
+    position: relative;
+    top: 75px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    padding: 0.3rem;
+    display: none;
+}
+
+#show-pallet-3-color-on-hover{
+    position: relative;
+    top: 45px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    padding: 0.3rem;
+    display: none;
+}
+
+#show-pallet-4-color-on-hover{
+    position: relative;
+    top: 23px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    border-bottom-left-radius: 0.8rem;
+    padding: 0.3rem;
+    display: none;
+}
 
 .medium-pallet-1{
     cursor: pointer;
