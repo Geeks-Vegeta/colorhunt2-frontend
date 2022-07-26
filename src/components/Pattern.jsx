@@ -33,6 +33,7 @@ export default function Pattern(props) {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const [tagItem, setTagItme] = useState([]);
 
 
 
@@ -65,6 +66,11 @@ export default function Pattern(props) {
           const colors = await axios.get(`${props.url}/100/${offset}`);
           setLatestColors(colors.data[0].results);
         }
+        if(props.tagurl){
+          const colors = await axios.get(`https://colorhunt2-api.herokuapp.com/color/getColorsByTags/${props.tagurl}`);
+          setTagItme(colors.data);
+
+        }
         const coll = await axios.get("https://colorhunt2-api.herokuapp.com/tag/getcollectiontag");
         setCollection(coll.data);
         
@@ -76,7 +82,7 @@ export default function Pattern(props) {
     }
     getAllCollections();
 
-  },[props.likes, props.url, offset]);
+  },[props.likes, props.url,props.tagurl, offset]);
 
   const showToast=()=>{
     toast.dark('copied', {
@@ -365,32 +371,77 @@ export default function Pattern(props) {
               </MDBTable>
 
               {/* tags */}
+             
+             <p className='text-center'>Tags</p>
+
+
               {props.tags?(
                 <>
-                <p className='text-center'>Tags</p>
-                 <div className="collection-tags-button w-50 mx-auto">
-                    <ul>
-                {props.tags.map((data, idx)=>{
-                  return(
-                    <>
-                   
-                      <li>
-                        <Link className='text-dark' to={`/palettes/${data.value}`}> {data.value}</Link>
-                        </li>
-                     
-                    </>
-                  )
-                })}
-                </ul>
-                </div>
-
+                {props.tags.length!==0?(
+                  <>
+                      <div className="collection-tags-button w-50 mx-auto">
+                        <ul>
+                    {props.tags.map((data, idx)=>{
+                      return(
+                        <>
+                          <li>
+                            <Link className='text-dark' to={`/palettes/${data.value}`}> {data.value}</Link>
+                          </li>
+                        </>
+                      )
+                    })}
+                    </ul>
+                    </div>
+                  </>
+                ):(
+                  <>
+                    <p className='text-center text-muted'>No Tags</p>
+                  </>
+                )}
                 </>
               ):(
-                <>
-                <p className='text-center text-muted'>No Tags</p>
+                <>              
                 </>
               )}
 
+            </>
+          ):(
+            <>
+            </>
+          )}
+
+
+          {props.isPalettesCollection?(
+            <>
+
+              <MDBRow>
+              {tagItem.length!==0?(
+                <>
+                {tagItem.map((data,idx)=>{
+                return(
+                  <>
+                    <MDBCol size="4" className='my-2'>
+                      <Link to={`/color/${data._id}`}>
+                        <div className="medium-palette" key={idx}>
+                          <div className="medium-pallet-1" style={{backgroundColor:data.color1}}></div>
+                          <div className="medium-pallet-2" style={{backgroundColor:data.color2}}></div>
+                          <div className="medium-pallet-3" style={{backgroundColor:data.color3}}></div>
+                          <div className="medium-pallet-4" style={{backgroundColor:data.color4}}></div>
+                        </div>
+                      </Link>
+                    </MDBCol>
+                  </>
+                )
+              })}
+                </>
+              ):(
+                <>
+                <p className='text-center text-muted'>No Palettes</p>
+                </>
+              )}
+              </MDBRow>
+
+            
             </>
           ):(
             <>

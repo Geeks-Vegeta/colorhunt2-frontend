@@ -9,9 +9,9 @@ const Palettes=()=>{
 
     return(
         <>
-        <h3>Palettes {params.collection}</h3>
         <Pattern
-        getcolor={false}
+        isPalettesCollection={true}
+        tagurl={params.collection}
         />
         </>
     )
