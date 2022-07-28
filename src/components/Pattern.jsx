@@ -22,7 +22,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { toJpeg } from 'html-to-image';
 import ReactPaginate from 'react-paginate';
-
+import { CollectionTags } from './CollectionTags';
 
 
 export default function Pattern(props) {
@@ -71,8 +71,7 @@ export default function Pattern(props) {
           setTagItme(colors.data);
 
         }
-        const coll = await axios.get("https://colorhunt2-api.herokuapp.com/tag/getcollectiontag");
-        setCollection(coll.data);
+        setCollection(CollectionTags);
         
       } catch (error) {
         console.log(error);
