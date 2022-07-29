@@ -5,9 +5,10 @@ import Nav from "./controllers/Nav";
 const App=()=>{
   return(
     <>
-    <BrowserRouter>
-    <Nav/>
-    </BrowserRouter>
+      <BrowserRouter>
+      <Nav/>
+      </BrowserRouter>
+   
     </>
    
     )

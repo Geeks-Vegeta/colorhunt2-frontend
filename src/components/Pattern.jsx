@@ -23,6 +23,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toJpeg } from 'html-to-image';
 import ReactPaginate from 'react-paginate';
 import { CollectionTags } from './CollectionTags';
+import { isMobile } from 'react-device-detect';
+import { BiSad } from "react-icons/bi";
 
 
 export default function Pattern(props) {
@@ -34,6 +36,7 @@ export default function Pattern(props) {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [tagItem, setTagItme] = useState([]);
+
 
 
 
@@ -59,6 +62,8 @@ export default function Pattern(props) {
     setLikes(props.likes)
 
     const getAllCollections=async()=>{
+
+      
 
       try {
         if(props.url){
@@ -173,9 +178,26 @@ export default function Pattern(props) {
       console.log(error);
     }
   }
+  if(isMobile) {
+    return (
+        <> 
+        <div className="mobile-view my-5">
+          <div className=" text-center">
+          <BiSad className='text-muted' size={120}/>
+          </div>
+          <h3 className='text-center text-muted'>404</h3>
+          <h4 className='text-center text-muted'>Page Not Found</h4>
+          <h5 className='text-center text-muted'>
+            App is not available in Mobile View
+          </h5>
+        </div>
 
-
+        </>
+    )
+}
   return (
+    <>
+
     <MDBContainer fluid className='my-4'>
       <MDBRow>
         <MDBCol lg="2" className='pattern-i'>
@@ -456,7 +478,7 @@ export default function Pattern(props) {
                 {currentItems.map((data,idx)=>{
                 return(
                   <>
-                    <MDBCol size="4" className='my-2'>
+                    <MDBCol lg={4} sm={12} className='my-2'>
                       <Link to={`/color/${data._id}`}>
                         <div className="medium-palette" key={idx}>
                           <div className="medium-pallet-1" style={{backgroundColor:data.color1}}></div>
@@ -551,5 +573,8 @@ export default function Pattern(props) {
       </MDBRow>
       <ToastContainer/>
     </MDBContainer>
+    
+    </>
+
   );
 } 
