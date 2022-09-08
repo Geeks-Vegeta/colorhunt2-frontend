@@ -10,7 +10,7 @@ import {
 import { GetColorName } from 'hex-color-to-color-name';
 import { AiOutlineStar, AiOutlineHeart, AiFillFileAdd, AiFillHeart } from "react-icons/ai";
 import { BsLink45Deg, BsDownload } from "react-icons/bs";
-import { FaMixcloud } from "react-icons/fa";
+import { FaDatabase, FaMixcloud } from "react-icons/fa";
 import { TbArrowsRandom } from "react-icons/tb";
 import "./pattern.css"
 import axios from "axios";
@@ -405,7 +405,7 @@ export default function Pattern(props) {
                     {props.tags.map((data, idx)=>{
                       return(
                         <>
-                          <li>
+                          <li style={{"backgroundColor":data.value}}>
                             <Link className='text-dark' to={`/palettes/${data.value}`}> {data.value}</Link>
                           </li>
                         </>

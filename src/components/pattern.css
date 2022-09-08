@@ -196,7 +196,7 @@
 .collection-tags-button>ul{
     display: flex;
     list-style-type: none;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .collection-tags-button>ul>li{
