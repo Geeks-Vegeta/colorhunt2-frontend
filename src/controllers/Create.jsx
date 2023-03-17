@@ -84,7 +84,7 @@ const Create=()=>{
   const CreatePalettes=async()=>{
     try {
 
-      const create = await axios.post("https://colorhunt2-api.herokuapp.com/color/add",{
+      const create = await axios.post("https://colorhunt2.onrender.com/color/add",{
         "color1":color1,
         "color2":color2,
         "color3":color3,

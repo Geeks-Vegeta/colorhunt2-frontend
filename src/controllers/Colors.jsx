@@ -23,7 +23,7 @@ const Colors=()=>{
 
             try {
 
-                const color = await axios.get(`https://colorhunt2-api.herokuapp.com/color/getcolor/${params.id}`);
+                const color = await axios.get(`https://colorhunt2.onrender.com/color/getcolor/${params.id}`);
                 setColor1(color.data.color1);
                 setColor2(color.data.color2);
                 setColor3(color.data.color3);

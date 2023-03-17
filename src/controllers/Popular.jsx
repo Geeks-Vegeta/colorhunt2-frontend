@@ -6,7 +6,7 @@ const Popular=()=>{
         <>
        <Pattern
         isColorSet={true}
-        url={"https://colorhunt2-api.herokuapp.com/color/popular"}/>
+        url={"https://colorhunt2.onrender.com/color/popular"}/>
         </>
     )
 }

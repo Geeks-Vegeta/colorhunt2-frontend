@@ -72,7 +72,7 @@ export default function Pattern(props) {
           setLatestColors(colors.data[0].results);
         }
         if(props.tagurl){
-          const colors = await axios.get(`https://colorhunt2-api.herokuapp.com/color/getColorsByTags/${props.tagurl}`);
+          const colors = await axios.get(`https://colorhunt2.onrender.com/${props.tagurl}`);
           setTagItme(colors.data);
 
         }
@@ -119,8 +119,8 @@ export default function Pattern(props) {
   const likeColor=async()=>{
 
     try {
-      await axios.put(`https://colorhunt2-api.herokuapp.com/color/like/${props.id}`);
-      const getColor = await axios.get(`https://colorhunt2-api.herokuapp.com/color/getcolor/${props.id}`);
+      await axios.put(`https://colorhunt2.onrender.com/color/like/${props.id}`);
+      const getColor = await axios.get(`https://colorhunt2.onrender.com/color/getcolor/${props.id}`);
       const adds=[...favo,getColor.data] //taking previous data of favo and adding new data of color
       setfavo(adds); //adding it to favos
       saveToLocalStorage(adds); //saving add in local storage
@@ -161,7 +161,7 @@ export default function Pattern(props) {
   const unlikeColor=async()=>{
 
     try {
-      await axios.put(`https://colorhunt2-api.herokuapp.com/color/unlike/${props.id}`);
+      await axios.put(`https://colorhunt2.onrender.com/color/unlike/${props.id}`);
       let items=JSON.parse(localStorage.getItem("color-picker-favorite"));
 
       items = items.filter((data, id)=>
