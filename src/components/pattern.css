@@ -7,6 +7,7 @@
 }
 
 
+
 .grey-color{
     color: gray;
 }
@@ -16,7 +17,7 @@
 }
 
 .pattern-i{
-    height: 100vh;
+    height: 90vh;
     overflow-y: scroll;
 }
 
@@ -25,7 +26,7 @@
 }
 
 .pattern-ii{
-    height: 100vh;
+    height: 90vh;
     overflow-y: scroll;
 }
 
@@ -34,7 +35,7 @@
 }
 
 .list-urls>ul>li{
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: gray;
     cursor: pointer;
 }
@@ -93,6 +94,16 @@
     cursor: pointer;
 }
 
+.central-row{
+    overflow-y: auto;
+}
+
+.logo-image-size{
+    width: 3rem;
+    height: 3rem;
+}
+
+
 #color-picker-card{
   width: 400px;
   border-radius: 0.8rem;
@@ -107,6 +118,48 @@
   background-color: rgb(136, 138, 138);
   height: 260px;
 
+}
+
+#show-pallet-1{
+    position: relative;
+    top: 115px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    display: block;
+    padding: 0.3rem;
+}
+
+#show-pallet-2{
+    position: relative;
+    top: 75px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    padding: 0.3rem;
+    display: block;
+}
+
+
+#show-pallet-3{
+    position: relative;
+    top: 45px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    padding: 0.3rem;
+    display: block;
+}
+
+#show-pallet-4{
+    position: relative;
+    top: 23px;
+    width: 5rem;
+    background-color: rgba(0, 0, 0, 0.171);
+    color: white;
+    border-bottom-left-radius: 0.8rem;
+    padding: 0.3rem;
+    display: block;
 }
 
 #show-pallet-1-color-on-hover{
@@ -126,6 +179,11 @@
     background-color: rgba(0, 0, 0, 0.171);
     color: white;
     padding: 0.3rem;
+    display: none;
+}
+
+
+#none{
     display: none;
 }
 
@@ -185,7 +243,7 @@
   
 
 .size{
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 
 .pink{
@@ -196,19 +254,24 @@
 .collection-tags-button>ul{
     display: flex;
     list-style-type: none;
-    justify-content: space-between;
+    justify-content: space-evenly;
+}
+
+.small-text{
+    font-size: 0.8rem;
+    color: rgb(87, 18, 94);
 }
 
 .collection-tags-button>ul>li{
-    width: 5rem;
+    width: 3rem;
     height: 2rem;
     text-align: center;
     padding: 0.1rem;
     border-radius: 1rem;
     cursor: pointer;
     outline: auto;
-    border-color: rgb(165, 57, 57);
-    border-width: 1rem;
+    border-color: rgb(18, 102, 2);
+    border-width: 0.4rem;
     background-color: transparent;
 }
 

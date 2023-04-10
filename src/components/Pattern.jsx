@@ -72,7 +72,7 @@ export default function Pattern(props) {
           setLatestColors(colors.data[0].results);
         }
         if(props.tagurl){
-          const colors = await axios.get(`https://colorhunt2.onrender.com/${props.tagurl}`);
+          const colors = await axios.get(`https://colorhunt2.onrender.com/color/getColorsByTags/${props.tagurl}`);
           setTagItme(colors.data);
 
         }
@@ -101,13 +101,18 @@ export default function Pattern(props) {
   }
 
   const DownloadImage=()=>{
-    toJpeg(document.getElementById('color-picker-card'))
+    document.getElementById('none').style.display='block';
+    toJpeg(document.getElementById('color-picker-card-none'))
   .then(function (dataUrl) {
     var link = document.createElement('a');
     link.download = `${window.location.href}.jpg`;
     link.href = dataUrl;
     link.click();
+  }).then(()=>{
+    document.getElementById('none').style.display='none';
+
   });
+
   }
 
   //storing data of individual color
@@ -151,9 +156,6 @@ export default function Pattern(props) {
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * 6) % Colors.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
 
@@ -198,7 +200,11 @@ export default function Pattern(props) {
   return (
     <>
 
-    <MDBContainer fluid className='my-4'>
+
+
+    <MDBContainer fluid className='my-3'>
+      <img src={"/logos.png"} alt="image" className='logo-image-size' />
+        <span className='img-logo font-weight-bold'>Color Picker</span>
       <MDBRow>
         <MDBCol lg="2" className='pattern-i'>
             <div className="list-urls">
@@ -215,6 +221,7 @@ export default function Pattern(props) {
                     <NavLink className={({ isActive }) => (isActive ? 'text-dark' : 'grey-color')} to="/create">Create</NavLink></li>
                 </ul>
             </div>
+            <hr />
             <div className="list-collection my-2">
               <ul>
                 {collection.map((data, idx)=>{
@@ -261,6 +268,27 @@ export default function Pattern(props) {
                 </div>
             </div>
 
+            <div id='none' className="w-50 mx-auto">
+              <div id="color-picker-card-none">
+                  <div className="pallet-1" 
+                  style={{backgroundColor:props.color1}}>
+                    <span id="show-pallet-1">{props.color1}</span>
+                  </div>
+                  <div className="pallet-2" 
+                  style={{backgroundColor:props.color2}}>
+                  <span id="show-pallet-2">{props.color2}</span>
+                  </div>
+                  <div className="pallet-3" 
+                  style={{backgroundColor:props.color3}}>
+                  <span id="show-pallet-3">{props.color3}</span>
+                  </div>
+                  <div className="pallet-4" 
+                  style={{backgroundColor:props.color4}}>
+                  <span id="show-pallet-4">{props.color4}</span>
+                  </div>
+                </div>
+            </div>
+
              
               <div className="down-like-link w-75 mx-auto">
                 <ul>
@@ -283,7 +311,7 @@ export default function Pattern(props) {
                     </>
                   )}
                   
-                  <li onClick={DownloadImage} className='cursor li'><BsDownload size={25} className='mx-2'/>Image</li>
+                  <li onClick={DownloadImage} className='cursor li'><BsDownload size={20} className='mx-2'/>Image</li>
                     <CopyToClipboard text={window.location.href}>
                       <li onClick={showToast} className='cursor li'><BsLink45Deg size={25} className='mx-2'/>
                         <span>Link</span>
@@ -400,13 +428,13 @@ export default function Pattern(props) {
                 <>
                 {props.tags.length!==0?(
                   <>
-                      <div className="collection-tags-button w-50 mx-auto">
+                      <div className="collection-tags-button text-center w-50 mx-auto">
                         <ul>
                     {props.tags.map((data, idx)=>{
                       return(
                         <>
                           <li style={{"backgroundColor":data.value}}>
-                            <Link className='text-dark' to={`/palettes/${data.value}`}> {data.value}</Link>
+                            <Link className='small-text' to={`/palettes/${data.value}`}>{data.value}</Link>
                           </li>
                         </>
                       )
@@ -472,13 +500,13 @@ export default function Pattern(props) {
           {props.isColorSet?(
             <>
              
-             <MDBRow>
+             <MDBRow className='pattern-home'>
               {currentItems?(
                 <>
                 {currentItems.map((data,idx)=>{
                 return(
                   <>
-                    <MDBCol lg={4} sm={12} className='my-2'>
+                    <MDBCol lg={4} sm={12} className='my-1'>
                       <Link to={`/color/${data._id}`}>
                         <div className="medium-palette" key={idx}>
                           <div className="medium-pallet-1" style={{backgroundColor:data.color1}}></div>
@@ -499,7 +527,7 @@ export default function Pattern(props) {
               )}
                 
             </MDBRow>
-            <div className="text-center mt-3 w-50 mx-auto">
+            <div className="text-center w-50 mx-auto">
               <ReactPaginate
                 nextLabel=">"
                 onPageChange={handlePageClick}
@@ -521,6 +549,7 @@ export default function Pattern(props) {
                 renderOnZeroPageCount={null}
               />
             </div>
+            
             
 
             </>
@@ -563,8 +592,8 @@ export default function Pattern(props) {
           
         </MDBCol>
         <MDBCol lg="2">
-            <h5>Most Popular Palettes of Color Picker</h5>
-            <p>The community's favorite color palettes</p>
+            <h6 className='font-weight-bold'>Most Popular Palettes of Color Picker</h6>
+            <h6>The community's favorite color palettes</h6>
             <hr className='w-75 mx-auto' />
             <p className='text-center text-muted'>
               <Link className='text-center text-muted' to="/about">About</Link></p>
