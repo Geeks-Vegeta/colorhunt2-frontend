@@ -10,7 +10,7 @@ import {
 import { GetColorName } from 'hex-color-to-color-name';
 import { AiOutlineStar, AiOutlineHeart, AiFillFileAdd, AiFillHeart } from "react-icons/ai";
 import { BsLink45Deg, BsDownload } from "react-icons/bs";
-import { FaDatabase, FaMixcloud } from "react-icons/fa";
+import { FaMixcloud } from "react-icons/fa";
 import { TbArrowsRandom } from "react-icons/tb";
 import "./pattern.css"
 import axios from "axios";
@@ -23,8 +23,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toJpeg } from 'html-to-image';
 import ReactPaginate from 'react-paginate';
 import { CollectionTags } from './CollectionTags';
-import { isMobile } from 'react-device-detect';
-import { BiSad } from "react-icons/bi";
 
 
 export default function Pattern(props) {
@@ -180,23 +178,6 @@ export default function Pattern(props) {
       console.log(error);
     }
   }
-  if(isMobile) {
-    return (
-        <> 
-        <div className="mobile-view my-5">
-          <div className=" text-center">
-          <BiSad className='text-muted' size={120}/>
-          </div>
-          <h3 className='text-center text-muted'>404</h3>
-          <h4 className='text-center text-muted'>Page Not Found</h4>
-          <h5 className='text-center text-muted'>
-            App is not available in Mobile View
-          </h5>
-        </div>
-
-        </>
-    )
-}
   return (
     <>
 
