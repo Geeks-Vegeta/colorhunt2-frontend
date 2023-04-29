@@ -32,7 +32,10 @@ const App=()=>{
               <span className='img-logo font-weight-bold'>Color Picker </span>
             </div>
             
-            <p className="text-center">Application is available on Android</p>
+            <p className="text-center">Application is available</p>
+            <p className="text-center">on <a href="https://bit.ly/3Holy55" target="_blank">Android</a> and  <a href="https://bit.ly/3Holy55" target="_blank">ios</a></p>
+
+
           </div>
         </MDBContainer>
         
